@@ -1,0 +1,34 @@
+version = 1
+
+[[source]]
+id = "sdo-skills"
+repo = "https://github.com/jr2804/sdo-skills.git"
+ref = "v0.1.0"
+
+[[source]]
+id = "etsi-portal-tool"
+repo = "D:\\SVN\\Projects\\Standardization\\etsi-portal-tool"
+ref = "v0.1.0"
+
+[skill]
+"3gpp-basics" = { layer = "3gpp", source = "sdo-skills" }
+"3gpp-change-request" = { layer = "3gpp", source = "sdo-skills" }
+"3gpp-meetings" = { layer = "3gpp", source = "sdo-skills" }
+"3gpp-portal-authentication" = { layer = "3gpp", source = "sdo-skills" }
+"3gpp-releases" = { layer = "3gpp", source = "sdo-skills" }
+"3gpp-specifications" = { layer = "3gpp", source = "sdo-skills" }
+"3gpp-tdocs" = { layer = "3gpp", source = "sdo-skills" }
+"3gpp-working-groups" = { layer = "3gpp", source = "sdo-skills" }
+"sdo-docx" = { layer = "common", source = "sdo-skills" }
+"sdo-drafting" = { layer = "common", source = "sdo-skills" }
+"sdo-ipr" = { layer = "common", source = "sdo-skills" }
+"sdo-project-setup" = { layer = "common", source = "sdo-skills" }
+"sdo-writing" = { layer = "common", source = "sdo-skills" }
+"etsi-directives" = { layer = "etsi", source = "sdo-skills" }
+"etsi-governance" = { layer = "etsi", source = "sdo-skills" }
+"etsi-procedures" = { layer = "etsi", source = "sdo-skills" }
+"etsi-tools" = { layer = "etsi", source = "sdo-skills" }
+"itut-contributions" = { layer = "itut", source = "sdo-skills" }
+"itut-reference" = { layer = "itut", source = "sdo-skills" }
+"etsi-meeting-report" = { layer = "tools", source = "etsi-portal-tool" }
+"etsi-portal-tool" = { layer = "tools", source = "etsi-portal-tool" }

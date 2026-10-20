@@ -1,0 +1,20 @@
+{
+  "validate_style_sequence": true,
+  "enforce_restart_per_section": true,
+  "notes": [
+    {
+      "style": "NW",
+      "ordinal": 1,
+      "note_number": 1,
+      "text": "First note text.",
+      "section_key": "4.2"
+    },
+    {
+      "style": "NO",
+      "ordinal": 1,
+      "note_number": 2,
+      "text": "Last note text.",
+      "section_key": "4.2"
+    }
+  ]
+}

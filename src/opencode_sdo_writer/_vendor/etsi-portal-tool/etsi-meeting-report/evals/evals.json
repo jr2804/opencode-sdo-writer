@@ -1,0 +1,45 @@
+{
+  "skill_name": "etsi-meeting-report",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I chair a meeting of an ETSI technical committee next week. Prepare it: pull all TDocs from the portal, build the schedule grid, and scaffold the agenda document. We run a single plenary with a sub-committee meeting alongside.",
+      "expected_output": "Phase 1 (prepare): meetings find for the plenary and the sub-committee meeting (any date, by name or id); documents list per meeting; download meeting --overwrite. The schedule is designed fresh from the chair's explicit constraints; no earlier grid is an input. The agenda body comes from the Python pipeline (meeting.toml, roundtrip before any patch). The lead document is generated only if it does not exist. Open points go to docs/<tc><nn>/issues.md."
+    },
+    {
+      "id": 2,
+      "prompt": "The meeting ended this morning. Here is last cycle's report and the report template. Draft this cycle's report from the agenda and the decisions I give you.",
+      "expected_output": "The report is the Technical Officer's document: the planner drafts only what the TO asks for and never names or publishes the report TDoc. Decisions are recorded with their status (Agreed, Noted, Postponed, Revised) using the vocabulary in references/status-vocabulary.md. Revisions are referenced as revision UIDs. Placeholders are bracketed italics and must all be resolved before publishing."
+    },
+    {
+      "id": 3,
+      "prompt": "Regenerate the schedule for the next meeting from the chair's new constraints: a fixed slot Monday 16:00 to 17:00 for a remote plugtest, lunch 12:30 to 13:30 every day, the social event Tuesday 19:00 to 21:00, close Wednesday 17:00.",
+      "expected_output": "Copy assets/schedule-config.example.ps1 into the meeting's scripts/ as <tc><nn>-schedule.ps1 and fill it from the constraints given. Run build-schedule.ps1 with -Config. Check summary failed=0, rolledBack=False and validate. Render the pages and look at them. The grid keeps one colour per topic, no merged topic cells, TAH/TAC styles, and a legend without times. Nothing from an earlier grid is carried over."
+    },
+    {
+      "id": 4,
+      "prompt": "Build the participant list for our committee and its sub-committee, for the last two meetings and the next one. One workbook, one row per person.",
+      "expected_output": "meeting_report participants --tc <TC> --tc <sub-TC> --meeting <UID> ... --out <file>. One sheet, one row per person (PersonId), Meeting column lists the meetings joined separated by comma and space. Presence: 2 = face to face, 1 = online; a person whose presence differs between meetings shows it per meeting. Workbook named ETSI-<UID>-Meeting.xlsx and kept out of git. Raw rosters stay under tools/var/."
+    },
+    {
+      "id": 5,
+      "prompt": "Upload my document to the contribution that is reserved for it. It has no file yet.",
+      "expected_output": "Check the contribution with tdoc show and documents list first. A Reserved contribution with no payload takes its first upload. Verify the publish by comparing served size and SHA-256 with the local file. Use --slug-title only if the chair asks for a specific name. Never probe a write path on a live contribution."
+    },
+    {
+      "id": 6,
+      "prompt": "My document is already published, but the published file is wrong. Replace it.",
+      "expected_output": "The portal will not re-point a contribution that already has a payload. Publish a new revision (rN, tdoc revise) and say so in the issues file. The stale file stays on the parent contribution. Ask the owner before any write; do not change titles to influence the published name."
+    },
+    {
+      "id": 7,
+      "prompt": "Someone in the committee asks for the agenda to be renamed to the chair's document number, and the report file to be dropped from our repository.",
+      "expected_output": "The planner names the agenda after the chair's document (its TDoc number). The report TDoc belongs to the Technical Officer: the planner neither produces nor names it and removes any local report draft from the repository. The schedule builder config is updated to the new path, with its BOM intact."
+    },
+    {
+      "id": 8,
+      "prompt": "The chair asked for the schedule to be regenerated from the earlier grid so we keep what worked.",
+      "expected_output": "Decline to carry forward slot placements or blocks from an earlier grid or revision: each schedule is designed fresh. Ask the chair for the explicit constraints. Keep the standing formatting rules. Mark the old config as provisional rather than rebuilding from it."
+    }
+  ]
+}

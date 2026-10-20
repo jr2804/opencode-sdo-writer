@@ -1,0 +1,11 @@
+# Never commit working data from this directory.
+#
+# var/ holds crawled portal output and downloaded documents, including the
+# per-meeting participant rosters (register list --json) and doc-contacts.json.
+# That is personal data: it must never enter the tracked tree (repository rule).
+# The Python pipeline source (meeting_report/, templates/, build_template.py,
+# pyproject.toml) IS part of the skill and is tracked; only .venv/ and var/ are not.
+.venv/
+var/
+__pycache__/
+*.pyc

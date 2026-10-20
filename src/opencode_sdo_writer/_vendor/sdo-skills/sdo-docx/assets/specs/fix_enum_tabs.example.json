@@ -1,0 +1,10 @@
+{
+  "style": "B1",
+  "bullet": "&#8211;",
+  "items": [
+    {
+      "ordinal": 1,
+      "text": "Sampling frequency: 48&#160;kHz, 16-bit PCM"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "headings": [
+    {
+      "style": "Heading1",
+      "ordinal": 1,
+      "number": "1",
+      "title": "Introduction"
+    },
+    {
+      "style": "Heading2",
+      "ordinal": 1,
+      "number": "2.1",
+      "title": "Send direction"
+    }
+  ]
+}

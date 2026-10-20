@@ -1,0 +1,26 @@
+# {{ meeting.label }} — Draft agenda (lead document)
+
+Generated once from the chair data and the portal (`lead` command). From now on this file is
+edited directly; it is not regenerated.
+
+## Documents (portal, at generation time)
+
+| TDoc | Title | Source |
+|---|---|---|
+{% for t in ctx.topics %}{% for d in t.docs %}| {{ d.uid }} | {{ d.title }} | {{ d.source }} |
+{% endfor %}{% endfor %}
+
+## Work items (portal, at generation time)
+
+| Number | Title | Rapporteur | Last draft and status | Next step |
+|---|---|---|---|---|
+{% for w in ctx.wi %}| {{ w.number }} | {{ w.title }} | {{ w.rapporteur }} | {{ w.last_draft }} | {{ w.next }} |
+{% endfor %}
+
+## Open issues
+
+Collected in `docs/<tc><nn>/issues.md`. Do not fix a problem silently in this text.
+
+## What changed
+
+- Initial generation.

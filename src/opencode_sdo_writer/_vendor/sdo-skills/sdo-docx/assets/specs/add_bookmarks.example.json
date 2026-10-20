@@ -1,0 +1,23 @@
+{
+  "figure": {
+    "style": "TF",
+    "xpath": "//w:p[w:pPr/w:pStyle/@w:val='TF']/w:r[1]",
+    "bookmark_name": "fig_simulation_chain",
+    "bookmark_id": 1
+  },
+  "table": {
+    "style": "TH",
+    "xpath": "//w:p[w:pPr/w:pStyle/@w:val='TH']/w:r[1]",
+    "bookmark_name": "tbl_idle_noise",
+    "bookmark_id": 2
+  },
+  "references": [
+    {
+      "ordinal": 1,
+      "xpath": "(//w:p[w:pPr/w:pStyle/@w:val='EX'])[1]/w:r[1]",
+      "number": 1,
+      "bookmark_name": "ref_ts26260",
+      "bookmark_id": 3
+    }
+  ]
+}
