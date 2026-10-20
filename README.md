@@ -1,124 +1,141 @@
 # OpenCode SDO Writer
 
-> OpenCode agent and profiles for writing standards contributions and deliverables (ETSI, 3GPP, ITU-T)
+> An OpenCode agent, three writer profiles and twenty-one skills for writing standards contributions and deliverables (ETSI, 3GPP, ITU-T)
 
-<!-- markdownlint-disable MD033 -->
 <p align="center">
   <a href="#"><img alt="Python 3.13+" src="https://img.shields.io/badge/python-3.13%2B-3776ab?logo=python"></a>
   <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-green.svg"></a>
-  <a href="https://github.com/jr2804/opencode-sdo-writer/actions"><img alt="CI" src="https://github.com/jr2804/opencode-sdo-writer/actions/workflows/ci.yml/badge.svg"></a>
+  <a href="https://github.com/jr2804/opencode-sdo-writer/actions">
+    <img alt="CI" src="https://github.com/jr2804/opencode-sdo-writer/actions/workflows/ci.yml/badge.svg">
+  </a>
 </p>
-<!-- markdownlint-enable MD033 -->
 
 ---
 
-## Quick Start
+## What this is
+
+Standards writing has two problems: the *rules* (who decides what, how a document is numbered, what
+a contribution must contain) and the *mechanics* (getting a skeleton document filled in without
+breaking its styles).
+
+This package installs both into OpenCode:
+
+- **`sdo-writer`**, an OpenCode agent that knows the difference between a contribution and a deliverable, and that refuses to invent a rule it has not read.
+- **Three profiles** — `etsi`, `3gpp`, `itut` — that decide which skills are in scope.
+- **Twenty-one skills** that carry the rules, the document skeletons, the checklists and the tooling
+  notes. The skill text lives in [jr2804/sdo-skills](https://github.com/jr2804/sdo-skills); this
+  repository vendors a pinned snapshot of it.
+
+Nothing has to be installed. Every external tool is pulled on demand through [mise](https://mise.jdx.dev/):
 
 ```bash
-# Clone and set up
-git clone https://github.com/jr2804/opencode-sdo-writer.git
-cd opencode-sdo-writer
-mise dev
+mise x github:iOfficeAI/OfficeCLI -- officecli get file.docx
 ```
 
-## Usage
-
-### Running Tests
+## Install
 
 ```bash
-mise test
-# or
-uv run pytest
+uvx opencode-sdo-writer init --profile etsi
 ```
 
-### Code Quality
+That writes the agent and the skills into your global OpenCode configuration (`~/.config/opencode/`),
+so they are available in every project. Use `--project .` to install into a single repository
+instead.
 
 ```bash
-mise lint       # ruff + ty + codespell
-mise format     # ruff format + isort
-mise all        # test + lint + format in one pass
+uvx opencode-sdo-writer init --profile 3gpp    # 3GPP
+uvx opencode-sdo-writer init --profile itut    # ITU-T
+uvx opencode-sdo-writer profiles               # list them
+uvx opencode-sdo-writer status                 # what is installed
+uvx opencode-sdo-writer update --profile etsi  # restore or refresh
+uvx opencode-sdo-writer uninstall              # remove everything again
 ```
 
-### CLI Commands
+Full details in [docs/installation.md](docs/installation.md).
+
+## Profiles
+
+| Profile | In scope | Adds |
+| ------- | -------- | ---- |
+| `etsi` | common + ETSI | Directives, procedures, portal and specification tooling |
+| `3gpp` | common + 3GPP | Working groups, meetings, TDoc conventions, change requests, portal session handling |
+| `itut` | common + ITU-T | Working methods, recommendation structure, contribution rules, patent policy |
+
+The common layer carries the writing style, the DOCX mechanics, the drafting skeletons, the IPR
+notes and the project setup. See [docs/profiles.md](docs/profiles.md).
+
+## The skills
+
+| Layer | Skills |
+| ----- | ------ |
+| common | `sdo-writing`, `sdo-docx`, `sdo-drafting`, `sdo-ipr`, `sdo-project-setup` |
+| etsi | `etsi-governance`, `etsi-directives`, `etsi-procedures`, `etsi-tools` |
+| 3gpp | `3gpp-basics`, `3gpp-meetings`, `3gpp-working-groups`, `3gpp-releases`, `3gpp-specifications`, `3gpp-tdocs`, `3gpp-change-request`, `3gpp-portal-authentication` |
+| itut | `itut-reference`, `itut-contributions` |
+| tools | `etsi-portal-tool`, `etsi-meeting-report` |
+
+Each skill is a directory with a `SKILL.md` and, where the content is too long for a prompt,
+`references/`, `assets/` and `scripts/`. The agent loads a skill when the request matches its
+description, and reads the references only when it needs them. The catalogue is in
+[docs/skills.md](docs/skills.md).
+
+## How a writing session looks
+
+1. You ask for a contribution, a meeting document, a work item description or a deliverable section.
+2. The agent loads the drafting skill for your body, plus the procedure skill that explains who does what.
+3. It copies the skeleton from `assets/`, fills it through OfficeCLI, and keeps the styles intact.
+4. It runs the checklist that belongs to the document type before it calls the work done.
+
+The agent does not write from memory about a body it has a rule for. If the request touches IPR,
+the Directives or a numbering rule, it loads the skill that holds the rule.
+
+## Working with the sources
+
+The skill text is not edited here. It comes from the skills repository, pinned in `src/opencode_sdo_writer/vendor.lock`:
 
 ```bash
-uv run opencode_sdo_writer                  # default command
-uv run opencode_sdo_writer greet Alice      # greet someone
-uv run opencode_sdo_writer add 5 3          # add numbers
-uv run opencode_sdo_writer --version        # show version
+uv run python scripts/vendor_skills.py \
+    --source D:/path/to/sdo-skills \
+    --ref v0.1.0 \
+    --extra-source etsi-portal-tool=D:/path/to/etsi-portal-tool
 ```
 
-| Environment Variable | Description |
-|----------------------|-------------|
-| `OPENCODE_SDO_WRITER_CACHE` | Enable/disable caching (true/false) |
-| `OPENCODE_SDO_WRITER_OUTPUT_FILE` | Default output file path |
+See [docs/skills.md](docs/skills.md) for how the layers are laid out and how a new skill is added.
 
 ## Development
 
-### Pre-commit Hooks
-
 ```bash
-pre-commit install
-pre-commit run --all-files
+mise dev          # create the environment and install everything
+mise test         # pytest with a 100% coverage gate
+mise lint         # ruff, ty and codespell
+mise format       # ruff format, isort and pyreorder
+mise all          # everything the CI runs
+mise docs-serve   # live preview of the documentation
 ```
 
-### Documentation
+The `init` command is the interesting part of the package: it reads a profile, resolves the
+vendored skills, writes them into an OpenCode configuration directory and records a manifest so
+that `update` and `uninstall` know what belongs to it. The behaviour is covered by tests in
+`tests/`.
 
-```bash
-mise docs-serve          # live preview at http://localhost:8000
-mise docs-build          # build static site to site/
-```
-
-## CI/CD
-
-GitHub Actions runs on every push and PR:
-
-| Workflow | Triggers | Jobs |
-|----------|----------|------|
-| **CI** (`ci.yml`) | push, PR to main | test matrix (3.13, 3.14) + lint + type-check |
-| **Release** (`release.yml`) | tag `v*` | build + publish to PyPI |
-
-## Project Structure
-
-```text
-opencode-sdo-writer/
-├── .config/mise/               # mise task definitions
-├── .github/workflows/          # CI + release workflows
-├── docs/                       # MkDocs documentation
-├── src/opencode_sdo_writer/     # Source package
-│   ├── __init__.py
-│   ├── __about__.py
-│   └── cli/
-│       ├── __init__.py
-│       ├── app.py
-│       ├── args.py
-│       └── commands.py
-├── tests/                      # Test suite
-├── .copier-answers.yml         # Template version tracking
-├── pyproject.toml              # uv + hatch + pytest config
-├── ruff.toml                   # Linter + formatter config
-├── ty.toml                     # Type checker config
-└── README.md
-```
-
-## Tech Stack
+## Tech stack
 
 | Layer | Tool | Purpose |
-|-------|------|---------|
+| ----- | ---- | ------- |
 | Package manager | [uv](https://docs.astral.sh/uv/) | Fast installs, deterministic lockfile |
-| Task runner | [mise](https://mise.jdx.dev/) | DAG-based tasks, tool version management |
+| Task runner | [mise](https://mise.jdx.dev/) | DAG-based tasks, tool version management, on-demand tools |
+| CLI | [Typer](https://typer.tiangolo.com/) | `opencode-sdo-writer init`, `status`, `update`, `uninstall` |
 | Linter + formatter | [ruff](https://docs.astral.sh/ruff/) | Single-binary code quality |
 | Type checker | [ty](https://github.com/google/ty) | Strict type checking |
-| Testing | [pytest](https://pytest.org/) | Test framework with 100% coverage gate |
+| Testing | [pytest](https://pytest.org/) | Test framework with a 100% coverage gate |
 | Spell check | [codespell](https://github.com/codespell-project/codespell) | Code and doc spell checking |
 | Documentation | [Zensical](https://github.com/zensical/zensical) | MkDocs Material with executable examples |
 | Versioning | [uv-dynamic-versioning](https://github.com/ninoseki/uv-dynamic-versioning) | Git tag-based versioning |
-| Hooks | [pre-commit](https://pre-commit.com/) | Automated quality gate |
 | CI/CD | GitHub Actions | Test matrix + PyPI release |
 
 ## License
 
-MIT — see [LICENSE](LICENSE) for details.
+MIT - see [LICENSE](LICENSE) for details.
 
 ---
 

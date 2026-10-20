@@ -87,8 +87,13 @@ def test_mise_tasks_configured() -> None:
         msg = ".config/mise/config.toml should exist"
         raise AssertionError(msg)
 
-    # Verify that at least the dev task is present (always included)
+    # Tasks live either in config.toml or in the conf.d/*.toml fragments that
+    # mise loads automatically.
     content = mise_file.read_text(encoding="utf-8")
+    conf_d = Path(".config/mise/conf.d")
+    for fragment in sorted(conf_d.glob("*.toml")) if conf_d.is_dir() else []:
+        content += "\n" + fragment.read_text(encoding="utf-8")
+
     if "[tasks.dev]" not in content:
-        msg = "Expected [tasks.dev] in config.toml"
+        msg = "Expected [tasks.dev] in config.toml or conf.d/*.toml"
         raise AssertionError(msg)

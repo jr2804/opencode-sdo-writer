@@ -26,16 +26,12 @@ disable = ["MD033"]
 # ]
 
 # List of file/directory patterns to exclude from linting
-# exclude = [
-#     ".git",
-#     ".github",
-#     "node_modules",
-#     "vendor",
-#     "dist",
-#     "build",
-#     "CHANGELOG.md",
-#     "LICENSE.md",
-# ]
+# The vendored skill snapshot is a verbatim copy: reformatting it would break
+# the vendoring contract. The agent templates are prompt bodies, not documents.
+exclude = [
+    "src/opencode_sdo_writer/_vendor",
+    "src/opencode_sdo_writer/templates",
+]
 
 # Respect .gitignore files when scanning directories (default: true)
 # respect-gitignore = true
@@ -49,11 +45,12 @@ flavor = "gfm"
 
 # Rule-specific configurations (uncomment and modify as needed)
 
-# [MD003]
-# style = "atx"  # Heading style (atx, atx_closed, setext)
-
-# [MD004]
-# style = "asterisk"  # Unordered list style (asterisk, plus, dash, consistent)
+[MD013]
+# Long table rows and long code lines are part of the content, not style.
+line-length = 160
+tables = false
+code-blocks = false
+headings = false
 
 # [MD007]
 # indent = 4  # Unordered list indentation

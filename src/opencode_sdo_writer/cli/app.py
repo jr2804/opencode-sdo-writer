@@ -1,4 +1,5 @@
 """Typer CLI app for OpenCode SDO Writer."""
+
 from __future__ import annotations
 
 from importlib.metadata import version
@@ -14,14 +15,15 @@ app = typer.Typer(
     no_args_is_help=True,
 )
 
-# Register commands. Commands are plain functions in commands.py — no
+# Register commands. Commands are plain functions in commands.py - no
 # @app.command() decorators there, no import of `app`: this avoids the
 # circular import (commands.py <-> app.py) and keeps pyreorder from
-# re-sorting this file into a broken state. Replace the demo commands
-# below with your own: `app.command()(commands.your_command)`.
-app.command()(commands.default)
-app.command()(commands.greet)
-app.command()(commands.add)
+# re-sorting this file into a broken state.
+app.command()(commands.profiles)
+app.command()(commands.init)
+app.command()(commands.update)
+app.command()(commands.status)
+app.command()(commands.uninstall)
 
 
 @app.callback(invoke_without_command=True)

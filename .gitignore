@@ -8,6 +8,8 @@ wheels/
 .coverage
 coverage.xml
 htmlcov/
+.ruff_cache/
+.pytest_cache/
 
 # Documentation build output (zensical / mkdocs)
 site/
@@ -32,7 +34,7 @@ nul
 # Virtual environments
 .venv
 *.env
-uv.lock
+# uv.lock is committed: this is an application, the lock file is the contract
 
 # Dev tools/MCP server data/dirs
 /.config/chunkhound/db

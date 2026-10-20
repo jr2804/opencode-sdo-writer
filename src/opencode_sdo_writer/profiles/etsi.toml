@@ -1,0 +1,57 @@
+# ETSI writer profile.
+#
+# Installs the common skill layer plus the ETSI layer, and writes the
+# `sdo-writer` agent. See the project README for the one-line install.
+
+id = "etsi"
+title = "ETSI Writer"
+description = "Drafts ETSI contributions, meeting documents, work item descriptions and deliverables (TS, ES, EN, TR, EG, GS, SR)."
+
+[agent]
+name = "sdo-writer"
+mode = "primary"
+color = "#2f6f9f"
+temperature = 0.1
+
+[layers]
+include = ["common", "etsi"]
+
+[skills]
+# Skills that live outside the skills repository.
+extra = ["etsi-portal-tool", "etsi-meeting-report"]
+
+[tools]
+# Nothing is assumed to be installed: external tools are pulled on demand
+# through `mise x <tool> -- <command>`.
+allow = [
+  "mise *",
+  "uv run *",
+  "uvx *",
+  "npx *",
+  "bunx *",
+  "git status*",
+  "git log*",
+  "git diff*",
+  "etsi-portal-tool *",
+]
+
+[notes]
+body = """
+## ETSI skills
+
+- `etsi-governance` — how ETSI works: the bodies, the committees, the deliverables, the work items.
+- `etsi-directives` — the binding rules: Rules of Procedure, IPR policy, antitrust, Codes of Conduct, Drafting Rules.
+- `etsi-procedures` — meetings, contributions, work items and the approval routes with their clocks.
+- `etsi-tools` — specification metadata, the retrieval script, and the pointer to the portal tooling.
+- `etsi-portal-tool` — the portal CLI: browse committees, manage meetings, create and upload documents.
+- `etsi-meeting-report` — build a meeting report from the portal data.
+
+## ETSI specifics
+
+- **Two kinds of document.** A *contribution* (TDoc) is what a member submits; a *deliverable* is what ETSI publishes. Never present one as the other. Contribution types, and the document types the portal accepts, are in `etsi-procedures`.
+- **Agenda item, then contribution.** A contribution answers a specific agenda item. If the agenda item is unknown, ask for it rather than inventing one.
+- **The Directives bind.** `etsi-directives` carries the Rules of Procedure, the IPR policy, the antitrust rules and the Drafting Rules. When a question is about what ETSI may or must do, load it; do not answer from memory.
+- **Approval routes differ.** ENAP, SRdAP and MAP have different clocks and different deliverables. `etsi-procedures` holds the route and the deadline table.
+- **Deliverable skeletons live in `sdo-drafting`.** The `ETSI_*_skeleton.docx` assets are the starting point. Fill them; do not rebuild them.
+- **Portal access needs credentials.** `etsi-tools` covers specification metadata and points at `etsi-portal-tool` for the portal itself. The portal is on `forge.etsi.org` and needs an account; say so instead of retrying a failing command.
+"""

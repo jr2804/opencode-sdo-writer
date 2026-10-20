@@ -12,7 +12,16 @@ nav = [
     { "Credits" = "credits.md" },
     { "License" = "license.md" },
   ] },
-  { "API reference" = "reference/api.md" },
+  { "Getting started" = [
+    { "Installation" = "installation.md" },
+    { "Usage" = "usage.md" },
+    { "Profiles" = "profiles.md" },
+    { "Skills" = "skills.md" },
+  ] },
+  { "Reference" = [
+    { "CLI reference" = "reference/cli.md" },
+    { "API reference" = "reference/api.md" },
+  ] },
   { "Development" = [
     { "Contributing" = "contributing.md" },
     { "Code of Conduct" = "code_of_conduct.md" },

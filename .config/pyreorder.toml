@@ -44,6 +44,6 @@ jobs = -1
 
 [discovery]
 # Glob patterns to exclude during file discovery (merged with --exclude flags).
-# exclude = []
+exclude = ["**/_vendor/**"]
 # Whether file discovery descends into subdirectories (--no-recursive overrides).
 recursive = true

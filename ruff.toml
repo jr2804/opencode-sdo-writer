@@ -1,6 +1,6 @@
 
 unsafe-fixes = true
-exclude = [".venv", ".tmp", "build", "dist", "__pypackages__"]
+exclude = [".venv", ".tmp", "build", "dist", "__pypackages__", "src/opencode_sdo_writer/_vendor"]
 target-version = "py313"
 line-length = 160
 
@@ -55,13 +55,22 @@ ignore = [
     "ANN401",
     "PLR0912",  # too-many-branches
     "PLR0913",
+    "PLR0917",  # too-many-positional-arguments
     "PLR2004", # magic value used in comparison
     "PT028",   # test function parameter has default argument
 ]
 
 [lint.per-file-ignores]
-# Use of assert statements in tests is pytest default behavior
-"tests/**/*.py" = ["S101"]
+# Tests use pytest fixtures, monkeypatching and local imports on purpose.
+"tests/**/*.py" = [
+    "S101",    # assert statements
+    "S108",    # hardcoded temporary directory
+    "ANN001",  # missing type annotation for a function argument
+    "ANN201",  # missing return type for a public function
+    "ANN202",  # missing return type for a private function
+    "PLC0415", # import outside the top level
+    "PLR6301", # no self use
+]
 
 [lint.pylint]
 max-locals = 20

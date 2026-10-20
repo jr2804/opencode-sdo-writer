@@ -90,9 +90,28 @@ change. Summary:
 
 ## Project rules
 
-_Always-injected_ — keep minimal. Everything else → `.agents/` files.
+_Always-injected_ - keep minimal. Everything else → `.agents/` files.
 
-[Fill with 5–10 essential, frequently-broken rules specific to this project.]
+1. **The skill text is not edited here.** Rule content lives in
+   [jr2804/sdo-skills](https://github.com/jr2804/sdo-skills). This repository
+   vendors a snapshot of it and pins the revision in
+   `src/opencode_sdo_writer/vendor.lock`. Change a skill in the skills
+   repository, re-vendor, never in `_vendor/`.
+2. **The installer only touches what it wrote.** A skill directory that the
+   manifest does not list is never modified or removed; the install reports a
+   conflict instead. This is a hard rule, not a preference.
+3. **No network in the build.** `scripts/vendor_skills.py` works on local
+   checkouts. A release is prepared from a checkout, never from a clone
+   during the build.
+4. **Nothing has to be installed.** Every command in the skills, in the docs
+   and in the agent text is written as `mise x <tool> -- <command>`.
+5. **OpenCode V2 syntax.** The agent file uses the `permission:` map, not the
+   V1 `permissions:` array. Keep the rendered frontmatter valid V2.
+6. **The test suite is the contract.** The package keeps a 100% coverage gate
+   (`--cov-fail-under=100`). New behaviour comes with a test.
+7. **One command name.** The CLI is `opencode-sdo-writer`; the agent file is
+   `sdo-writer.md`. The two names are different on purpose: one is the
+   installer, the other is the thing OpenCode runs.
 
 ## Child DOX Index
 
@@ -101,8 +120,12 @@ Start lean. Add child AGENTS.md entries incrementally when boundaries become dur
 Top-level boundaries in this project:
 
 - `src/opencode_sdo_writer/` (primary package code)
+  - `src/opencode_sdo_writer/profiles/` - the writer profiles, one TOML file each
+  - `src/opencode_sdo_writer/templates/` - the agent templates
+  - `src/opencode_sdo_writer/_vendor/` - the vendored skill snapshot (generated)
 - `tests/` (test suite)
 - `docs/` (documentation)
+- `scripts/` (vendoring and credits helpers)
 - `.config/mise/` (task/tooling configuration)
 
 ## ⛔ No Patching

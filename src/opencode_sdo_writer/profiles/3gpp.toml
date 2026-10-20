@@ -1,0 +1,58 @@
+# 3GPP writer profile.
+#
+# Installs the common skill layer plus the 3GPP layer, and writes the
+# `sdo-writer` agent. See the project README for the one-line install.
+
+id = "3gpp"
+title = "3GPP Writer"
+description = "Drafts 3GPP contributions (TDocs), change requests, meeting agendas and reports for TSG, WG and subgroup meetings."
+
+[agent]
+name = "sdo-writer"
+mode = "primary"
+color = "#8a5cf6"
+temperature = 0.1
+
+[layers]
+include = ["common", "3gpp"]
+
+[skills]
+extra = []
+
+[tools]
+# Nothing is assumed to be installed: external tools are pulled on demand
+# through `mise x <tool> -- <command>`.
+allow = [
+  "mise *",
+  "uv run *",
+  "uvx *",
+  "npx *",
+  "bunx *",
+  "git status*",
+  "git log*",
+  "git diff*",
+]
+
+[notes]
+body = """
+## 3GPP skills
+
+- `3gpp-basics` — the organisation: TSGs, working groups, the portals, the vocabulary.
+- `3gpp-working-groups` — which working group owns what, the tbid values, the FTP layout of a WG.
+- `3gpp-meetings` — the meeting calendar, the meeting naming and the document numbering.
+- `3gpp-releases` — release naming, version numbers, the freeze cycle.
+- `3gpp-specifications` — TS and TR numbering, the version format, the FTP structure.
+- `3gpp-tdocs` — the TDoc metadata, the number format, the FTP conventions.
+- `3gpp-change-request` — the CR number format, the categories, the submission checklist.
+- `3gpp-portal-authentication` — the portal login, the session scope and the endpoints behind it.
+
+## 3GPP specifics
+
+- **A contribution is a TDoc.** It carries a document number of the form `<meeting>-<agenda>-<sequence>`, for example `R1-260717`, and a mandatory revision history. `3gpp-tdocs` holds the number format and the metadata.
+- **The document number is not yours to invent.** If the meeting and agenda item are unknown, ask. A wrong number makes the contribution unusable.
+- **CRs are a separate procedure.** A change request has its own number format, categories (F, A, TEI) and lifecycle. Use `3gpp-change-request`, not the contribution procedure.
+- **Specifications come from the FTP server.** TS and TR numbering, the FTP layout and the version format are in `3gpp-specifications`. Public over HTTPS, no authentication needed.
+- **Working group identity matters.** The WG and subgroup, and their tbid, decide where a document goes. `3gpp-working-groups` holds the mapping.
+- **Meeting data comes from the portal.** `3gpp-meetings` covers the meeting calendar and naming; `3gpp-portal-authentication` covers the login and the AJAX endpoints behind the meeting pages.
+- **Templates.** The TDoc template and its styles are described in `sdo-drafting` (3GPP style map) and in `sdo-project-setup`; the `TDoc-Header` and `TDoc-` style names are the ones that matter.
+"""

@@ -1,0 +1,52 @@
+# ITU-T writer profile.
+#
+# Installs the common skill layer plus the ITU-T layer, and writes the
+# `sdo-writer` agent. See the project README for the one-line install.
+
+id = "itut"
+title = "ITU-T Writer"
+description = "Drafts ITU-T contributions, TDocs, liaison statements and Recommendations for study groups, working parties and rapporteurs."
+
+[agent]
+name = "sdo-writer"
+mode = "primary"
+color = "#0f9d8c"
+temperature = 0.1
+
+[layers]
+include = ["common", "itut"]
+
+[skills]
+extra = []
+
+[tools]
+# Nothing is assumed to be installed: external tools are pulled on demand
+# through `mise x <tool> -- <command>`.
+allow = [
+  "mise *",
+  "uv run *",
+  "uvx *",
+  "npx *",
+  "bunx *",
+  "git status*",
+  "git log*",
+  "git diff*",
+]
+
+[notes]
+body = """
+## ITU-T skills
+
+- `itut-reference` — how ITU-T works: the study groups, the Recommendation structure, the approval routes, terms and numbering.
+- `itut-contributions` — contribution submission, the deadlines, liaison statements, the IPR in a contribution.
+
+## ITU-T specifics
+
+- **Rec. ITU-T A.1 governs the process.** It sets the contribution deadlines, the submission rules and the translation rules. `itut-contributions` and `itut-reference` are built from it; consult them rather than recalling the procedure.
+- **Contributions are C-series documents**; temporary documents are TDocs. A liaison statement is neither. Know which one you are writing before you start.
+- **Deadlines are absolute.** The submission cut-off for a meeting is published by the rapporteur or the study group. If the user did not give it, ask.
+- **A Recommendation has a fixed structure.** Clause order, annex conventions, terms and numbering are in `sdo-drafting` (ITU-T sub-tree). Do not improvise a clause order.
+- **Common text with ISO/IEC is special.** ITU-T | ISO/IEC common text has its own presentation rules; they live in `itut-reference`.
+- **Patent declarations are part of the form.** Every contribution carries a patent or copyright declaration, and the choice of licensing option is the submitter's, not the drafter's. `sdo-ipr` holds the three options (RF, RAND, refusal) and the declaration forms. Never fill in a declaration on the submitter's behalf.
+- **Approval routes.** Recommendations are approved by TAP (priority) or AAP (routine). `itut-reference` holds the rules.
+"""

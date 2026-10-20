@@ -21,36 +21,56 @@ OutputFile = Annotated[
     ),
 ]
 
-Cache = Annotated[
-    bool,
-    typer.Option(
-        "--cache/--no-cache",
-        help="Enable or disable caching",
-        envvar=f"{APP_NAME_UPPERCASE}_CACHE",
-    ),
-]
-
 # Command-specific arguments
 
-NameArg = Annotated[
-    str,
-    typer.Argument(help="Name to greet"),
-]
-
-InputFileArg = Annotated[
-    typer.FileText | None,
+ProfileArg = Annotated[
+    str | None,
     typer.Option(
-        "--input-file",
-        help="File containing names to greet (one per line)",
+        "--profile",
+        "-p",
+        help="Profile to install: etsi, 3gpp or itut",
     ),
 ]
 
-NumberArg1 = Annotated[
-    float,
-    typer.Argument(help="First number"),
+SourcePath = Annotated[
+    str | None,
+    typer.Option(
+        "--source",
+        "-s",
+        help="Path to a local checkout of the skills repository (development mode)",
+    ),
 ]
 
-NumberArg2 = Annotated[
-    float,
-    typer.Argument(help="Second number"),
+ConfigPath = Annotated[
+    str | None,
+    typer.Option(
+        "--config",
+        "-c",
+        help="Path to an OpenCode configuration directory (defaults to the global one)",
+    ),
+]
+
+ProjectPath = Annotated[
+    str | None,
+    typer.Option(
+        "--project",
+        help="Install into the .opencode directory of this project instead of the global one",
+    ),
+]
+
+ForceFlag = Annotated[
+    bool,
+    typer.Option(
+        "--force",
+        "-f",
+        help="Overwrite skill directories that were not created by this installer",
+    ),
+]
+
+DryRunFlag = Annotated[
+    bool,
+    typer.Option(
+        "--dry-run",
+        help="Show what would be done without writing anything",
+    ),
 ]

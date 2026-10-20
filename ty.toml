@@ -8,6 +8,10 @@ include = [
     "src",
     "tests",
 ]
+# The vendored skill snapshot is third-party content and is not type checked.
+exclude = [
+    "src/opencode_sdo_writer/_vendor",
+]
 
 [terminal]
 error-on-warning = true

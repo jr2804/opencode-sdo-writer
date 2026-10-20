@@ -12,15 +12,26 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3.13",
     "Topic :: Software Development :: Libraries :: Python Modules",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
 ]
+keywords = ["opencode", "standards", "etsi", "3gpp", "itu-t", "agent", "skills", "writing"]
 dependencies = [
     "typer>=0.12.0",
 ]
+
+[project.urls]
+Homepage = "https://github.com/jr2804/opencode-sdo-writer"
+Documentation = "https://github.com/jr2804/opencode-sdo-writer"
+Repository = "https://github.com/jr2804/opencode-sdo-writer"
+Issues = "https://github.com/jr2804/opencode-sdo-writer/issues"
+Skills = "https://github.com/jr2804/sdo-skills"
 
 [dependency-groups]
 dev = [
     "pytest>=8.0.0",
     "pytest-cov>=5.0.0",
+    "pyyaml>=6.0.0",
     "zensical>=0.0.26",
     "mkdocstrings[python]>=0.29",
     "markdown-exec>=1.8",
@@ -33,6 +44,12 @@ opencode-sdo-writer = "opencode_sdo_writer.cli.app:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/opencode_sdo_writer"]
+artifacts = [
+    "src/opencode_sdo_writer/profiles/*.toml",
+    "src/opencode_sdo_writer/templates/*.md",
+    "src/opencode_sdo_writer/vendor.lock",
+    "src/opencode_sdo_writer/_vendor/**",
+]
 
 [build-system]
 requires = ["hatchling", "uv-dynamic-versioning"]
@@ -48,14 +65,14 @@ fallback-version = "0.0.0"
 testpaths = ["tests"]
 pythonpath = ["src", "tests"]
 cache_dir = "tests/test-cache"
-addopts = "-v --tb=short"
+addopts = "-v --tb=short --cov=opencode_sdo_writer --cov-report=term-missing --cov-report=html --cov-report=xml --cov-fail-under=100"
 
 [tool.pytest-cov]
-addopts = "--cov=opencode_sdo_writer --cov-report=term-missing --cov-report=html --cov-report=xml"
+addopts = "--cov=opencode_sdo_writer --cov-report=term-missing --cov-report=html --cov-report=xml --cov-fail-under=100"
 fail_under = 100
 
 [tool.codespell]
-skip = "*.git,*.svg,*.lock,*.min.js,*.min.css"
+skip = "*.git,*.svg,*.lock,*.min.js,*.min.css,*/_vendor/*"
 check-hidden = true
 ignore-words-list = "crate,ser,fpr,nd,fo,ba,te"
 ignore-regex = "https?://|\b[A-Z]+\b"
