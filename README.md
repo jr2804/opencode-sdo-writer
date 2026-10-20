@@ -34,8 +34,17 @@ mise x github:iOfficeAI/OfficeCLI -- officecli get file.docx
 
 ## Install
 
+The package lives in this repository, so it is installed straight from git:
+
 ```bash
-uvx opencode-sdo-writer init --profile etsi
+uvx --from "git+https://github.com/jr2804/opencode-sdo-writer" opencode-sdo-writer init --profile etsi
+```
+
+The command is long, so alias it once:
+
+```bash
+alias sdo-writer='uvx --from "git+https://github.com/jr2804/opencode-sdo-writer" opencode-sdo-writer'
+sdo-writer init --profile etsi
 ```
 
 That writes the agent and the skills into your global OpenCode configuration (`~/.config/opencode/`),
@@ -43,12 +52,12 @@ so they are available in every project. Use `--project .` to install into a sing
 instead.
 
 ```bash
-uvx opencode-sdo-writer init --profile 3gpp    # 3GPP
-uvx opencode-sdo-writer init --profile itut    # ITU-T
-uvx opencode-sdo-writer profiles               # list them
-uvx opencode-sdo-writer status                 # what is installed
-uvx opencode-sdo-writer update --profile etsi  # restore or refresh
-uvx opencode-sdo-writer uninstall              # remove everything again
+sdo-writer init --profile 3gpp    # 3GPP
+sdo-writer init --profile itut    # ITU-T
+sdo-writer profiles               # list them
+sdo-writer status                 # what is installed
+sdo-writer update --profile etsi  # restore or refresh
+sdo-writer uninstall              # remove everything again
 ```
 
 Full details in [docs/installation.md](docs/installation.md).

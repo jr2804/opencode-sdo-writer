@@ -10,10 +10,18 @@ every external tool the skills use is pulled on demand through `mise`.
 ### One line
 
 ```bash
-uvx opencode-sdo-writer init --profile etsi
+uvx --from "git+https://github.com/jr2804/opencode-sdo-writer" opencode-sdo-writer init --profile etsi
 ```
 
 `uvx` downloads the package, runs the `init` command and throws the temporary environment away. The installed skills and the agent stay behind.
+
+The command is long, so most people alias it once:
+
+```bash
+alias sdo-writer='uvx --from "git+https://github.com/jr2804/opencode-sdo-writer" opencode-sdo-writer'
+```
+
+The examples below use that alias.
 
 ### Where things land
 
@@ -31,19 +39,19 @@ OpenCode reads `~/.config/opencode/skills/` without any further configuration, s
 
 ```bash
 # Global: available in every project (default)
-uvx opencode-sdo-writer init --profile etsi
+sdo-writer init --profile etsi
 
 # One project only
-uvx opencode-sdo-writer init --profile etsi --project /path/to/repo
+sdo-writer init --profile etsi --project /path/to/repo
 
 # An explicit configuration directory
-uvx opencode-sdo-writer init --profile etsi --config /path/to/.opencode
+sdo-writer init --profile etsi --config /path/to/.opencode
 ```
 
 ### Profiles
 
 ```bash
-uvx opencode-sdo-writer profiles
+sdo-writer profiles
 ```
 
 | Profile | Layers | Focus |
@@ -58,7 +66,7 @@ They come from the portal tool repository rather than from the skills repository
 ### Checking the result
 
 ```bash
-uvx opencode-sdo-writer status
+sdo-writer status
 ```
 
 The output lists the installed skills. A `!` next to a skill means its files on disk no longer match
@@ -70,7 +78,7 @@ The hash ignores the line endings of text files, so a checkout that converts the
 ### Updating
 
 ```bash
-uvx opencode-sdo-writer update --profile etsi
+sdo-writer update --profile etsi
 ```
 
 `update` is `init` with the same guarantees: skills whose content changed are replaced, skills that
@@ -80,7 +88,7 @@ contains are removed.
 ### Removing
 
 ```bash
-uvx opencode-sdo-writer uninstall
+sdo-writer uninstall
 ```
 
 Only what the installer wrote is removed. A skill directory that you created yourself is never touched.
@@ -101,7 +109,7 @@ rename the old directory or pass `--force` to let the installer replace it.
 To install straight from a checkout of the skills repository instead of the vendored snapshot:
 
 ```bash
-uvx opencode-sdo-writer init --profile etsi --source /path/to/sdo-skills
+sdo-writer init --profile etsi --source /path/to/sdo-skills
 ```
 
 The manifest then records the checkout, and `status` shows that path as the source.

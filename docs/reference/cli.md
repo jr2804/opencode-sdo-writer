@@ -8,14 +8,16 @@ title: CLI reference
 opencode-sdo-writer [OPTIONS] COMMAND [ARGS]...
 ```
 
-The package installs one command, `opencode-sdo-writer`. After `uvx` it is `uvx opencode-sdo-writer ...`.
+The package installs one command, `opencode-sdo-writer`. The examples below write it as
+`sdo-writer ...`, which is the short alias for
+`uvx --from "git+https://github.com/jr2804/opencode-sdo-writer" opencode-sdo-writer ...`.
 
 ### `init`
 
 Install a profile and the writer agent.
 
 ```bash
-uvx opencode-sdo-writer init --profile etsi
+sdo-writer init --profile etsi
 ```
 
 | Option | Short | Default | Meaning |
@@ -34,7 +36,7 @@ The report lists what was installed, updated, left alone, removed, and what was 
 Re-install a profile, replacing the skills whose content changed.
 
 ```bash
-uvx opencode-sdo-writer update --profile etsi
+sdo-writer update --profile etsi
 ```
 
 Takes the same options as `init`.
@@ -44,7 +46,7 @@ Takes the same options as `init`.
 Show what is installed.
 
 ```bash
-uvx opencode-sdo-writer status
+sdo-writer status
 ```
 
 | Option | Short | Meaning |
@@ -59,7 +61,7 @@ A `!` next to a skill means its files no longer match the recorded hash.
 Remove the installed skills, the agent and the manifest.
 
 ```bash
-uvx opencode-sdo-writer uninstall
+sdo-writer uninstall
 ```
 
 Only what a previous install wrote is removed.
@@ -69,7 +71,7 @@ Only what a previous install wrote is removed.
 List the available profiles.
 
 ```bash
-uvx opencode-sdo-writer profiles
+sdo-writer profiles
 ```
 
 ### Exit codes
@@ -83,14 +85,14 @@ uvx opencode-sdo-writer profiles
 
 ```bash
 # See what an install would do
-uvx opencode-sdo-writer init --profile etsi --dry-run
+sdo-writer init --profile etsi --dry-run
 
 # Install into one project
-uvx opencode-sdo-writer init --profile 3gpp --project .
+sdo-writer init --profile 3gpp --project .
 
 # Install from a checkout of the skills repository
-uvx opencode-sdo-writer init --profile itut --source ../sdo-skills
+sdo-writer init --profile itut --source ../sdo-skills
 
 # Replace a hand-made skill directory
-uvx opencode-sdo-writer init --profile etsi --force
+sdo-writer init --profile etsi --force
 ```
