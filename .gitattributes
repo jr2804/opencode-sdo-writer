@@ -1,32 +1,4 @@
-# Auto-detect text files and normalize to LF
-* text=auto
-
-# Shell scripts must be LF
-*.sh text eol=lf
-
-# Python source
-*.py text diff=python
-
-# Markdown
-*.md text diff=markdown
-
-# Configuration
-*.yml text
-*.yaml text
-*.toml text
-*.ini text
-*.cfg text
-*.conf text
-
-# Images
-*.png binary
-*.jpg binary
-*.jpeg binary
-*.gif binary
-*.svg text
-*.ico binary
-
-# Archives
-*.zip binary
-*.tar.gz binary
-*.gz binary
+# The vendored snapshot is a verbatim copy of the skills. Keep the line
+# endings as they are in the source repository, so that a checkout on
+# Windows does not change the bytes of the installed skills.
+_vendor/** -text

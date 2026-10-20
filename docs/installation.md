@@ -64,6 +64,9 @@ uvx opencode-sdo-writer status
 The output lists the installed skills. A `!` next to a skill means its files on disk no longer match
 the recorded hash - somebody edited them. `update` restores them.
 
+The hash ignores the line endings of text files, so a checkout that converts them (git with
+`core.autocrlf` on Windows) does not report a change.
+
 ### Updating
 
 ```bash

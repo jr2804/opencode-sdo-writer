@@ -118,6 +118,10 @@ def hash_skill(directory: Path) -> str:
 
     The hash covers the relative path and the content of every file, so that
     an update detects changes in references and assets as well.
+
+    Line endings are normalized for text files. A checkout that converts the
+    line endings on the way out (git with ``core.autocrlf``) then hashes the
+    same as the repository it was cloned from, and the status stays quiet.
     """
     digest = hashlib.sha256()
     for path in sorted(p for p in directory.rglob("*") if p.is_file()):
@@ -126,6 +130,22 @@ def hash_skill(directory: Path) -> str:
         relative = path.relative_to(directory).as_posix()
         digest.update(relative.encode("utf-8"))
         digest.update(b"\0")
-        digest.update(path.read_bytes())
+        digest.update(_normalized_bytes(path))
         digest.update(b"\0")
     return digest.hexdigest()
+
+
+def _normalized_bytes(path: Path) -> bytes:
+    """Return the file content with normalized line endings for text files.
+
+    Binary files (templates, images) are returned unchanged. A file is
+    treated as text when it decodes as UTF-8 and holds no null byte.
+    """
+    data = path.read_bytes()
+    if b"\0" in data:
+        return data
+    try:
+        text = data.decode("utf-8")
+    except UnicodeDecodeError:
+        return data
+    return text.replace("\r\n", "\n").replace("\r", "\n").encode("utf-8")

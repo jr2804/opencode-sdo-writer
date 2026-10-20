@@ -73,6 +73,31 @@ def test_hash_skill_covers_references(tmp_path) -> None:
     assert hash_skill(skill_dir) != first
 
 
+def test_hash_skill_ignores_line_endings(tmp_path) -> None:
+    skill_dir = tmp_path / "alpha"
+    skill_dir.mkdir()
+    (skill_dir / "SKILL.md").write_bytes(b"---\nname: alpha\n---\ntext\n")
+    first = hash_skill(skill_dir)
+    (skill_dir / "SKILL.md").write_bytes(b"---\r\nname: alpha\r\n---\r\ntext\r\n")
+    assert hash_skill(skill_dir) == first
+
+
+def test_hash_skill_keeps_binary_files_apart(tmp_path) -> None:
+    skill_dir = _make_skill(tmp_path, "alpha")
+    (skill_dir / "template.docx").write_bytes(b"PK\x03\x04\x00binary")
+    first = hash_skill(skill_dir)
+    (skill_dir / "template.docx").write_bytes(b"PK\x03\x04\x00other")
+    assert hash_skill(skill_dir) != first
+
+
+def test_hash_skill_treats_undecodable_files_as_binary(tmp_path) -> None:
+    skill_dir = _make_skill(tmp_path, "alpha")
+    (skill_dir / "legacy.dat").write_bytes(b"\xff\xfe\xfa")
+    first = hash_skill(skill_dir)
+    (skill_dir / "legacy.dat").write_bytes(b"\xff\xfe\xfb")
+    assert hash_skill(skill_dir) != first
+
+
 def _make_skill(root: Path, skill_id: str, body: str = "text") -> Path:
     skill_dir = root / skill_id
     skill_dir.mkdir(parents=True)
