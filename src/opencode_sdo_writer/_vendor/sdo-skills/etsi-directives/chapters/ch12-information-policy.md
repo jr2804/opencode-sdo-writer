@@ -55,7 +55,7 @@ The Information Policy is a **simplified summary** of access rules that are actu
 
 ## Worked Example
 
-**"Who can see a Technical Body's draft and contributions?"**
+### "Who can see a Technical Body's draft and contributions?"
 
 1. **Do not answer from the Information Policy alone** — it summarises, and the Directives prevail.
 2. **Go to the operative provision**: **TWP Clause 6** sets the conditions for making TC/EP/ISG **draft deliverables**, **individual contributions**, and **any other documents** public from open Docbox areas (Ch 11).

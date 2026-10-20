@@ -10,10 +10,12 @@ running a release decides exactly what goes into the package.
 Usage:
     uv run python scripts/vendor_skills.py \
         --source D:/SVN/Projects/AI/sdo-skills \
-        --ref v0.1.0 \
+        --ref v0.2.0 \
         --output src/opencode_sdo_writer/vendor.lock \
         --vendor-dir src/opencode_sdo_writer/_vendor \
-        --extra-source etsi-portal-tool=D:/SVN/Projects/Standardization/etsi-portal-tool
+        --extra-source etsi-portal-tool=D:/SVN/Projects/Standardization/etsi-portal-tool \
+        --extra-repo etsi-portal-tool=https://forge.etsi.org/rep/reimes/etsi-portal-tool \
+        --extra-ref etsi-portal-tool=239b2d9
 """
 
 from __future__ import annotations
@@ -64,6 +66,13 @@ def main(argv: list[str] | None = None) -> int:
         metavar="ID=URL",
         help="Repository URL to record for an extra source",
     )
+    parser.add_argument(
+        "--extra-ref",
+        action="append",
+        default=[],
+        metavar="ID=REF",
+        help="Revision to record for an extra source (defaults to --ref)",
+    )
     args = parser.parse_args(argv)
 
     source_root = args.source.resolve()
@@ -77,8 +86,9 @@ def main(argv: list[str] | None = None) -> int:
         print(f"Error: no skills found in {skills_root}", file=sys.stderr)
         return 1
 
-    sources = [("sdo-skills", args.repo, args.ref)]
+    sources = [("sdo-skills", args.repo, args.ref, False)]
     extra_repos = dict(parse_extra_pair(item) for item in args.extra_repo)
+    extra_refs = dict(parse_extra_pair(item) for item in args.extra_ref)
     for source_id, path in args.extra_source:
         extra_root = path.resolve()
         if not extra_root.is_dir():
@@ -91,7 +101,9 @@ def main(argv: list[str] | None = None) -> int:
             print(f"Skipping extra source '{source_id}': no skills in {root}", file=sys.stderr)
             continue
         skills.extend(extra_skills)
-        sources.append((source_id, extra_repos.get(source_id, str(extra_root)), args.ref))
+        sources.append(
+            (source_id, extra_repos.get(source_id, str(extra_root)), extra_refs.get(source_id, args.ref), True)
+        )
 
     if args.vendor_dir.exists():
         shutil.rmtree(args.vendor_dir)
@@ -132,20 +144,22 @@ def find_skills(root: Path, source_id: str, layered: bool) -> list[Skill]:
     return found
 
 
-def write_lock(path: Path, sources: list[tuple[str, str, str]], skills: list[Skill]) -> None:
+def write_lock(path: Path, sources: list[tuple[str, str, str, bool]], skills: list[Skill]) -> None:
     """Write the lock file.
 
     Args:
         path: Where to write the lock file.
-        sources: Tuples of identifier, repository URL and revision.
+        sources: Tuples of identifier, repository URL, revision and optional flag.
         skills: The skills to record.
     """
     lines = ["version = 1", ""]
-    for source_id, repo, ref in sources:
+    for source_id, repo, ref, optional in sources:
         lines.append("[[source]]")
         lines.append(f"id = {_toml_string(source_id)}")
         lines.append(f"repo = {_toml_string(repo)}")
         lines.append(f"ref = {_toml_string(ref)}")
+        if optional:
+            lines.append("optional = true")
         lines.append("")
 
     lines.append("[skill]")

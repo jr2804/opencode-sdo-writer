@@ -105,7 +105,7 @@ Essential fields for CR submission:
 
 ## See Also
 
-- [SKILL.md](SKILL.md) - Full CR reference with status codes and detailed fields
+- [SKILL.md](../SKILL.md) - Full CR reference with status codes and detailed fields
 - `references/cr-format.md` - CR number format, status table, categories, document sections, WI codes, databases
 - `references/cr-checklist.md` - Submission checklist, common pitfalls, best practices, mirror CR concepts
 - `3gpp-specifications` - Spec numbering and structure

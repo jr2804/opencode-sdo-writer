@@ -3,12 +3,13 @@ version = 1
 [[source]]
 id = "sdo-skills"
 repo = "https://github.com/jr2804/sdo-skills.git"
-ref = "v0.1.0"
+ref = "v0.2.0"
 
 [[source]]
 id = "etsi-portal-tool"
-repo = "D:\\SVN\\Projects\\Standardization\\etsi-portal-tool"
-ref = "v0.1.0"
+repo = "https://forge.etsi.org/rep/reimes/etsi-portal-tool"
+ref = "239b2d9"
+optional = true
 
 [skill]
 "3gpp-basics" = { layer = "3gpp", source = "sdo-skills" }
