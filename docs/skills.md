@@ -58,7 +58,7 @@ ref = "v0.1.0"
 
 [[source]]
 id = "etsi-portal-tool"
-repo = "D:\\SVN\\Projects\\Standardization\\etsi-portal-tool"
+repo = "https://forge.etsi.org/rep/reimes/etsi-portal-tool.git"
 ref = "v0.1.0"
 
 [skill]

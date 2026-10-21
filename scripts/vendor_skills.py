@@ -9,11 +9,11 @@ running a release decides exactly what goes into the package.
 
 Usage:
     uv run python scripts/vendor_skills.py \
-        --source D:/SVN/Projects/AI/sdo-skills \
+        --source /path/to/sdo-skills \
         --ref v0.2.0 \
         --output src/opencode_sdo_writer/vendor.lock \
         --vendor-dir src/opencode_sdo_writer/_vendor \
-        --extra-source etsi-portal-tool=D:/SVN/Projects/Standardization/etsi-portal-tool \
+        --extra-source etsi-portal-tool=/path/to/etsi-portal-tool \
         --extra-repo etsi-portal-tool=https://forge.etsi.org/rep/reimes/etsi-portal-tool \
         --extra-ref etsi-portal-tool=239b2d9
 """
