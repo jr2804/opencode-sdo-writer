@@ -112,6 +112,10 @@ _Always-injected_ - keep minimal. Everything else → `.agents/` files.
 7. **One command name.** The CLI is `opencode-sdo-writer`; the agent file is
    `sdo-writer.md`. The two names are different on purpose: one is the
    installer, the other is the thing OpenCode runs.
+8. **No inline imports.** Every import sits at the top of its module, in the
+   test suite as well. `ruff` enforces it (`PLC0415`) and `pyreorder` hoists
+   stragglers. The module order itself is a gate too: `mise run sort` fails
+   when `pyreorder check` would change a file. Run `mise run format` to fix.
 
 ## Child DOX Index
 

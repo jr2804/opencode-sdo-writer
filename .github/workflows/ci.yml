@@ -57,6 +57,9 @@ jobs:
     - name: Run linter
       run: mise lint
 
+    - name: Check the structural order
+      run: mise sort
+
     - name: Check spelling
       run: mise spell
 

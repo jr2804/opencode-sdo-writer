@@ -21,6 +21,18 @@ repos:
         args: [--fix, --exit-non-zero-on-fix]
       - id: ruff-format
 
+  # Structural order of the modules: imports at the top, constants, then
+  # classes, then functions (caller before callee). Needs pyreorder on PATH;
+  # the project toolchain provides it through mise.
+  - repo: local
+    hooks:
+      - id: pyreorder
+        name: pyreorder (structural order)
+        entry: pyreorder run --config .config/pyreorder.toml
+        language: system
+        types: [python]
+        require_serial: true
+
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
     hooks:

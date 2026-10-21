@@ -117,6 +117,7 @@ See [docs/skills.md](docs/skills.md) for how the layers are laid out and how a n
 mise dev          # create the environment and install everything
 mise test         # pytest with a 100% coverage gate
 mise lint         # ruff, ty and codespell
+mise sort         # check the structural order of the modules (pyreorder)
 mise format       # ruff format, isort and pyreorder
 mise all          # everything the CI runs
 mise docs-serve   # live preview of the documentation
@@ -135,6 +136,7 @@ that `update` and `uninstall` know what belongs to it. The behaviour is covered 
 | Task runner | [mise](https://mise.jdx.dev/) | DAG-based tasks, tool version management, on-demand tools |
 | CLI | [Typer](https://typer.tiangolo.com/) | `opencode-sdo-writer init`, `status`, `update`, `uninstall` |
 | Linter + formatter | [ruff](https://docs.astral.sh/ruff/) | Single-binary code quality |
+| Structural sorter | [pyreorder](https://pypi.org/project/pyreorder/) | Module order and hoisted imports |
 | Type checker | [ty](https://github.com/google/ty) | Strict type checking |
 | Testing | [pytest](https://pytest.org/) | Test framework with a 100% coverage gate |
 | Spell check | [codespell](https://github.com/codespell-project/codespell) | Code and doc spell checking |

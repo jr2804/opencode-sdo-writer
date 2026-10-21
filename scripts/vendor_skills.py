@@ -101,9 +101,7 @@ def main(argv: list[str] | None = None) -> int:
             print(f"Skipping extra source '{source_id}': no skills in {root}", file=sys.stderr)
             continue
         skills.extend(extra_skills)
-        sources.append(
-            (source_id, extra_repos.get(source_id, str(extra_root)), extra_refs.get(source_id, args.ref), True)
-        )
+        sources.append((source_id, extra_repos.get(source_id, str(extra_root)), extra_refs.get(source_id, args.ref), True))
 
     if args.vendor_dir.exists():
         shutil.rmtree(args.vendor_dir)

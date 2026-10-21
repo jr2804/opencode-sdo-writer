@@ -7,8 +7,7 @@ from pathlib import Path
 import pytest
 from typer.testing import CliRunner
 
-from opencode_sdo_writer.cli import app as app_module
-from opencode_sdo_writer.cli import commands as commands_module
+from opencode_sdo_writer.cli import app as app_module, commands as commands_module
 from opencode_sdo_writer.cli.app import app
 from opencode_sdo_writer.lockfile import LockError, load_lock
 from opencode_sdo_writer.profile import ProfileError

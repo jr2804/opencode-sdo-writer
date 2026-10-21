@@ -61,14 +61,15 @@ ignore = [
 ]
 
 [lint.per-file-ignores]
-# Tests use pytest fixtures, monkeypatching and local imports on purpose.
+# Tests use pytest fixtures and monkeypatching on purpose. They do not use
+# inline imports: every import sits at the top of the module, like everywhere
+# else in this repository.
 "tests/**/*.py" = [
     "S101",    # assert statements
     "S108",    # hardcoded temporary directory
     "ANN001",  # missing type annotation for a function argument
     "ANN201",  # missing return type for a public function
     "ANN202",  # missing return type for a private function
-    "PLC0415", # import outside the top level
     "PLR6301", # no self use
 ]
 
@@ -84,3 +85,5 @@ docstring-code-line-length = 160
 
 [lint.isort]
 known-first-party = ["opencode_sdo_writer"]
+# Keep "import x as y" on the same line as the rest of its import block.
+combine-as-imports = true

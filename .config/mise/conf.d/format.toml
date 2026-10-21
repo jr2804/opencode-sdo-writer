@@ -2,9 +2,13 @@
 description = "Format code (ruff, isort, pyreorder)"
 run = [
 	"pyreorder run src/ tests/ scripts/ --config .config/pyreorder.toml",
-	"ruff format src/ tests/",
-	"ruff check src/ tests/ --select I --fix",
+	"ruff format src/ tests/ scripts/",
+	"ruff check src/ tests/ scripts/ --select I --fix",
 ]
+
+[tasks.sort]
+description = "Check the structural order of the modules (pyreorder)"
+run = "pyreorder check src/ tests/ scripts/ --config .config/pyreorder.toml"
 
 [tasks.format-md]
 description = "Lint and reformat Markdown files with rumdl"

@@ -26,6 +26,8 @@ Kept compact — agents hallucinate less when they know where definitions live.
 | Test suite             | `tests/`                                                        | `test_*.py`, `conftest.py`                      |
 | Project metadata       | `pyproject.toml`                                                | `[project]`, `[tool.pytest.ini_options]`        |
 | Linter/formatter       | `ruff.toml`                                                     | Ruff rule selection, line length                |
+| Structural sorter      | `.config/pyreorder.toml`                                         | `sections`, `strategies`, `hoist_inline_imports` |
+| Structural sorter      | `.config/pyreorder.toml`                                         | `sections`, `strategies`, `hoist_inline_imports` |
 | Type checker           | `ty.toml`                                                       | ty strictness                                   |
 | Markdown linter        | `.config/rumdl.toml`                                            | `line-length`, `flavor`, disabled rules         |
 | mise tasks             | `.config/mise/config.toml` + `.config/mise/conf.d/*.toml`       | `[tasks.dev]`, `[tasks.test]`, ...              |
