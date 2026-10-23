@@ -75,3 +75,4 @@ mcporter.json
 
 # custom/local/misc. files
 mise.local.toml
+uv.lock
