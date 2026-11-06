@@ -83,6 +83,7 @@ change. Summary:
 | `ONBOARDING.md`  | New session (first time)    | Project orientation, entry points               |
 | `POLICIES.md`    | Always                      | Boundaries, priorities, verification, checklist |
 | `FILES.md`       | Touching files or config    | Path constants, source-of-truth locations       |
+| `TOOLS.md`       | Touching tooling/config     | Dev tooling, MCP servers, skills inventory      |
 | `HISTORY.md`     | Background (past decisions) | Recorded decisions with git refs                |
 | `MAINTENANCE.md` | Changing `.agents/`         | How to keep DOX files current                   |
 | `plans/`         | Working on a feature        | Implementation plans (gitignored)               |
